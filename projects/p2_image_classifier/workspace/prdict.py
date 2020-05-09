@@ -36,17 +36,18 @@ logger.setLevel(logging.ERROR)
 
 
 
-
 def predict(image_path, model, top_k):
     im = Image.open(image_path)
     numpy_image = np.asarray(im)
     image = process_image(numpy_image)
     image = np.expand_dims(image , 0 )
     prediction = model.predict(image)
-    classes = np.argpartition(prediction[0], -top_k)[-top_k:]
-    probs = prediction[0][classes]
-    return probs, classes + 1
-
+    classes_unsorted = np.argpartition(prediction[0], -top_k)[-top_k:]
+    probs_unsorted = prediction[0][classes_unsorted]
+    classes_unsorted = classes_unsorted +1
+    probs =[a for a,b in sorted(zip(probs_unsorted,classes_unsorted))]
+    classes =[b for a,b in sorted(zip(probs_unsorted,classes_unsorted))]
+    return probs, classes
 
 
 
@@ -141,4 +142,5 @@ ax2.set_xlim(0, 1.1)
 plt.tight_layout()
 plt.show()
 
-
+print ('top %s classesnr , class name , probability' %top_k)
+np.vstack((classes ,label_class, probs)).T
