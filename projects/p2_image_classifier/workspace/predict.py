@@ -61,12 +61,12 @@ def main():
     parser.add_argument('Path',
                        metavar='path',
                        type=str,
-                       default='./test_images/cautleya_spicata.jpg',
+                       #default='./test_images/cautleya_spicata.jpg',
                        help='Input flower image for the classification.')
     parser.add_argument('model',
                        metavar='path',
                        type=str,
-                       default='my_model.h5',
+                       #default='my_model.h5',
                        help='Input model for the classification.')
     # parser.add_argument('Path',
     #     '--input',
